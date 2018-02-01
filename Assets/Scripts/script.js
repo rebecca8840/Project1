@@ -1,18 +1,33 @@
 // JavaScript Document
+//===============================
+//Credits
+//Sarah Stauber: Leader, API's
+//Anthony Knight: API's, JScripter
+//Rebecca Brown: Front-End
+//Eric Shae: JScript Compiler, Court Jesther, Booze & Snacks
+//===============================
 
-var movieData;
-var movieChosen;
+
+
+var foodData;
 var eventData;
-var eventChosen;
+
+var currentFood = "";
+var currentEvent = "";
 
 //Ticketmaster API
-var ticketmasterURL = "";
+var ticketmasterURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=VFqKbEqAQRwPLtAKW0UynnLWlq3YTFkY&postalCode=02910";
 var ticketmasterKey = "VFqKbEqAQRwPLtAKW0UynnLWlq3YTFkY";
 var ticketmasterSecret = "X0iHZkGjS3HUf3Y1";
 
-//Google Maps API
-var gMapsDirKey = "AIzaSyB40cmHuwMhUBf1kD6wbqr9lXL4C6R4a5M";
-
+//Yelp API
+var yelpURL = "";
+var yelpKey = "SaHLyPn3DYzSLycjffQW8_C7YL2rAN0EJ73tUTKzuE24z5k57agTgg5fqlOCujo3pAYX14RTWmkGag4OfmrzyZuYybKKXxFjmHYgUyi8nHj3mSLrl_rohD7359dvWnYx";
+var yelpSecret = "VA711YCfZC8tzofZWEhAVGkUOVHI0TbeddWinQzP9kAkKBrEtaRo9f9EDDGyS6oP";
+	
+var corsanywhere = 'https://cors-anywhere.herokuapp.com/';
+var queryURLSearchYelp = 'https://api.yelp.com/v3/businesses/search';
+var apiKeyYelp = 'Bearer -tcLAnA2QhhU9kQ60q8FVq5k0ltA27gBPn7OJtXxqfXEFWcur_Qm-7DKZGuoM9wKAQPrYa1fDsV4yJHBSHvKdnIAZU5yAMwg_NfJXX3or92lVQQSkpvcULui1wlxWnYx'
 
 // Initialize Firebase
 var config = {
@@ -26,3 +41,59 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
+
+var leadsRef = database.ref('leads');
+leadsRef.on('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      var childData = childSnapshot.val();
+    });
+});
+
+
+function getsearchApi() {
+	$.ajax({
+		url: "https://cors-anywhere.herokuapp.com/" + queryURLSearchYelp,
+		"crossDomain": true,            
+		method: "GET",
+		data: {
+		location: 'Boston, Ma',
+		term: 'restaurants'
+		},
+		headers: {"Authorization" : apiKeyYelp}            
+
+	}).then(function(response) {
+		console.log("Yelp Search ");
+		console.log(response);
+	});		
+}
+
+function getsearchApiTicketMaster() {
+	$.ajax({
+		method:"GET",
+		url:"https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=VFqKbEqAQRwPLtAKW0UynnLWlq3YTFkY",
+		async: true,
+		// dataType: "json",
+		data: {
+		postalCode: '03801'
+	}
+
+	}).then(function(response2) {
+		console.log("ticketmaster Search ");
+		console.log(response2);
+	});
+}
+
+leadsRef.on("child_added", function(snapshot) {
+	
+});
+
+$("#submitButton").on("click", function() {
+	
+});
+
+$("document").on("click", function() {
+	var cardChosen = $(this).attr("data-card");
+	console.log(this);
+	console.log("You Got a Card");
+	
+});
