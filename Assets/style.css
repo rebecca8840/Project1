@@ -1,0 +1,31 @@
+@charset "utf-8";
+
+
+/* CSS Document */
+
+/* Color codes: 58118f (purple) 19c2c4 (blue) 29272a (text) fffff1 (cream)*/
+
+/* in card buttons: data-card */
+
+ body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+
+
+.helpMeLord {
+	width: 60%;
+}
+
+#resultSearch {
+	border-style: solid;
+	border-color: deeppink;
+}
+
+
